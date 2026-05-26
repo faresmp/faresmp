@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FareSMP — Официальный сайт сервера</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="toast" class="toast">IP-адрес скопирован в буфер обмена!</div>
+
+    <header>
+        <div class="container animate-fade">
+            <div class="logo-wrapper">
+                <span class="badge">SEASON I</span>
+                <h1>⚔️ FareSMP</h1>
+            </div>
+            <p class="subtitle">Открытый ванильный сервер Minecraft с элементами хардкора</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Блок подключения -->
+        <section class="card connection-card animate-fade delay-1">
+            <div class="card-header">
+                <h2>🔌 ПОДКЛЮЧИТЬСЯ К СЕРВЕРУ</h2>
+                <span class="version-badge">ВЕРСИЯ 1.21.11</span>
+            </div>
+            <p class="card-desc">Нажмите на плашку ниже, чтобы мгновенно скопировать адрес для игры</p>
+            <div class="ip-click-zone" onclick="copyIp()" title="Нажмите для копирования">
+                <div class="ip-content">
+                    <span id="server-ip" class="ip-text">213.171.18.136:32698</span>
+                    <span class="copy-icon">📋</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Главное событие + ТАЙМЕР -->
+        <section class="card event animate-fade delay-2">
+            <h2>📅 ГЛАВНОЕ СОБЫТИЕ СЕЗОНА</h2>
+            <p class="highlight">Ивент: <strong>Открытие Энда</strong></p>
+            <p class="date-text">30 мая 2026 года в 11:00 по МСК</p>
+            <div id="countdown-box">
+                <p class="card-desc">До старта великой битвы осталось:</p>
+                <div id="timer" class="pulse">Загрузка...</div>
+            </div>
+        </section>
+
+        <!-- Фишки -->
+        <section class="card features animate-fade delay-3">
+            <h2>🕹️ УНИКАЛЬНЫЕ МЕХАНИКИ</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon">❤️</div>
+                    <h3>5 Жизней</h3>
+                    <p>Каждый игрок начинает свой путь с жестким лимитом.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">⚔️</div>
+                    <h3>Честное PvP</h3>
+                    <p>Теряйте жизнь только тогда, когда вас одолел другой игрок.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">⚡</div>
+                    <h3>Булава Бога</h3>
+                    <p>Легендарный артефакт в единственном экземпляре на весь мир.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Крафт -->
+        <section class="card craft animate-fade delay-4">
+            <h2>🔨 РЕЦЕПТ БУЛАВЫ БОГА</h2>
+            <p class="card-desc">Создайте великое оружие на обычном верстаке, объединив редчайшие ресурсы:</p>
+            <div class="craft-container">
+                <div class="craft-slot">Булава</div>
+                <div class="craft-separator">+</div>
+                <div class="craft-slot special">Яйцо дракона</div>
+                <div class="craft-separator">+</div>
+                <div class="craft-slot">Булава</div>
+            </div>
+        </section>
+
+        <!-- Telegram -->
+        <section class="card tg-section animate-fade delay-5">
+            <h2>📢 НАШЕ СООБЩЕСТВО</h2>
+            <p>У нас полностью отсутствует Discord. Все важные обновления, патчноуты и глобальные ивенты публикуются только в одном первоисточнике.</p>
+            <a href="https://t.me" target="_blank" class="btn-tg">СТАТЬ ЧАСТЬЮ TG-СООБЩЕСТВА</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FareSMP. Все права защищены. Разработано специально для создателя проекта.</p>
+    </footer>
+
+    <script>
+        function copyIp() {
+            const ipText = document.getElementById("server-ip").innerText;
+            const tempInput = document.createElement("input");
+            tempInput.value = ipText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            const toast = document.getElementById("toast");
+            toast.classList.add("show");
+            setTimeout(() => { toast.classList.remove("show"); }, 3000);
+        }
+
+        const targetDate = new Date("May 30, 2026 11:00:00 GMT+0300").getTime();
+        setInterval(function() {
+            const distance = targetDate - new Date().getTime();
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            if (distance < 0) {
+                document.getElementById("timer").innerHTML = "ЭНД УЖЕ ОТКРЫТ!";
+            } else {
+                document.getElementById("timer").innerHTML = days + "д " + hours + "ч " + minutes + "м " + seconds + "с ";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
